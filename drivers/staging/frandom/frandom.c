@@ -64,6 +64,7 @@ module_param(frandom_chunklimit, int, 0);
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 MODULE_PARM_DESC(frandom_major,"Major number of /dev/frandom and /dev/erandom");
 MODULE_PARM_DESC(frandom_minor,"Minor number of /dev/frandom");
 MODULE_PARM_DESC(erandom_minor,"Minor number of /dev/erandom");
@@ -74,6 +75,11 @@ MODULE_PARM_DESC(frandom_major,"Major number of /dev/frandom and /dev/erandom");
 MODULE_PARM_DESC(frandom_minor,"Minor number of /dev/frandom");
 MODULE_PARM_DESC(erandom_minor,"Minor number of /dev/erandom");
 >>>>>>> parent of 5910191163480... staging: frandom: Dynamically allocate the char device numbers
+=======
+MODULE_PARM_DESC(frandom_major,"Major number of /dev/frandom and /dev/erandom");
+MODULE_PARM_DESC(frandom_minor,"Minor number of /dev/frandom");
+MODULE_PARM_DESC(erandom_minor,"Minor number of /dev/erandom");
+>>>>>>> abbd84d5ae930... staging: Add frandom RNG driver
 MODULE_PARM_DESC(frandom_bufsize,"Internal buffer size in bytes. Default is 256. Must be >= 256");
 MODULE_PARM_DESC(frandom_chunklimit,"Limit for read() blocks size. 0 (default) is unlimited, otherwise must be >= 256");
 
@@ -201,10 +207,14 @@ static int frandom_open(struct inode *inode, struct file *filp)
 	 */
 	if ((num != frandom_minor) && (num != erandom_minor)) return -ENODEV;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
   
 >>>>>>> parent of 4982e9668f713... staging: frandom: Clear up checkpatch conflicts
+=======
+  
+>>>>>>> abbd84d5ae930... staging: Add frandom RNG driver
 	state = kmalloc(sizeof(struct frandom_state), GFP_KERNEL);
 	if (!state)
 		return -ENOMEM;
@@ -303,6 +313,7 @@ static struct file_operations frandom_fops = {
 static void frandom_cleanup_module(void) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unregister_chrdev_region(MKDEV(frandom_major, erandom_minor), 1);
 =======
 	device_destroy(frandom_class, erandom_devt);
@@ -310,6 +321,9 @@ static void frandom_cleanup_module(void) {
 =======
 	unregister_chrdev_region(MKDEV(frandom_major, erandom_minor), 1);
 >>>>>>> parent of 5910191163480... staging: frandom: Dynamically allocate the char device numbers
+=======
+	unregister_chrdev_region(MKDEV(frandom_major, erandom_minor), 1);
+>>>>>>> abbd84d5ae930... staging: Add frandom RNG driver
 	cdev_del(&erandom_cdev);
 	device_destroy(frandom_class, MKDEV(frandom_major, erandom_minor));
 
@@ -370,6 +384,7 @@ static int frandom_init_module(void)
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	result = alloc_chrdev_region(&frandom_devt, 0, NR_FRANDOM_DEVS, "frandom");
 	if (result < 0) {
@@ -384,6 +399,8 @@ static int frandom_init_module(void)
 >>>>>>> parent of 4982e9668f713... staging: frandom: Clear up checkpatch conflicts
 =======
 >>>>>>> parent of 5910191163480... staging: frandom: Dynamically allocate the char device numbers
+=======
+>>>>>>> abbd84d5ae930... staging: Add frandom RNG driver
 	cdev_init(&frandom_cdev, &frandom_fops);
 	frandom_cdev.owner = THIS_MODULE;
 	result = cdev_add(&frandom_cdev, MKDEV(frandom_major, frandom_minor), 1);
@@ -391,8 +408,11 @@ static int frandom_init_module(void)
 	  printk(KERN_WARNING "frandom: Failed to add cdev for /dev/frandom\n");
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> parent of 5910191163480... staging: frandom: Dynamically allocate the char device numbers
+=======
+>>>>>>> abbd84d5ae930... staging: Add frandom RNG driver
 	  goto error1;
 	}
 
@@ -400,10 +420,14 @@ static int frandom_init_module(void)
 	if (result < 0) {
 		printk(KERN_WARNING "frandom: can't get major/minor %d/%d\n", frandom_major, frandom_minor);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> abbd84d5ae930... staging: Add frandom RNG driver
 	  goto error2;
 	}
 
 	frandom_device = device_create(frandom_class, NULL, MKDEV(frandom_major, frandom_minor), NULL, "frandom");
+<<<<<<< HEAD
 =======
 	  goto error2;
 	}
@@ -416,6 +440,8 @@ static int frandom_init_module(void)
 
 	frandom_device = device_create(frandom_class, NULL, MKDEV(frandom_major, frandom_minor), NULL, "frandom");
 >>>>>>> parent of 5910191163480... staging: frandom: Dynamically allocate the char device numbers
+=======
+>>>>>>> abbd84d5ae930... staging: Add frandom RNG driver
 
 	if (IS_ERR(frandom_device)) {
 		printk(KERN_WARNING "frandom: Failed to create frandom device\n");
@@ -429,6 +455,9 @@ static int frandom_init_module(void)
 	  printk(KERN_WARNING "frandom: Failed to add cdev for /dev/erandom\n");
 	  goto error4;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> abbd84d5ae930... staging: Add frandom RNG driver
 	}
 
 	result = register_chrdev_region(MKDEV(frandom_major, erandom_minor), 1, "/dev/erandom");
@@ -442,6 +471,7 @@ static int frandom_init_module(void)
 	if (IS_ERR(erandom_device)) {
 		printk(KERN_WARNING "frandom: Failed to create erandom device\n");
 		goto error6;
+<<<<<<< HEAD
 =======
 	}
 
@@ -461,6 +491,8 @@ static int frandom_init_module(void)
 =======
 		goto error6;
 >>>>>>> parent of 5910191163480... staging: frandom: Dynamically allocate the char device numbers
+=======
+>>>>>>> abbd84d5ae930... staging: Add frandom RNG driver
 	}
 	return 0; /* succeed */
 
@@ -482,6 +514,7 @@ static int frandom_init_module(void)
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return result;	
 =======
     return result;
@@ -489,12 +522,16 @@ static int frandom_init_module(void)
 =======
 	return result;	
 >>>>>>> parent of 5910191163480... staging: frandom: Dynamically allocate the char device numbers
+=======
+	return result;	
+>>>>>>> abbd84d5ae930... staging: Add frandom RNG driver
 }
 
 module_init(frandom_init_module);
 module_exit(frandom_cleanup_module);
 
 EXPORT_SYMBOL(erandom_get_random_bytes);
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 MODULE_AUTHOR("Eli Billauer <eli@billauer.co.il>");
@@ -504,3 +541,5 @@ MODULE_LICENSE("GPL");
  
 =======
 >>>>>>> parent of 4982e9668f713... staging: frandom: Clear up checkpatch conflicts
+=======
+>>>>>>> abbd84d5ae930... staging: Add frandom RNG driver
