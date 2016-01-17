@@ -106,11 +106,6 @@ source "drivers/staging/greybus/Kconfig"
 
 source "drivers/staging/vc04_services/Kconfig"
 
-<<<<<<< HEAD
 source "drivers/staging/qcacld-3.0/Kconfig"
 
-source "drivers/staging/frandom/Kconfig"
-
-=======
->>>>>>> 2de69d71d363a... drivers: Upgrade frandom from staging
 endif # STAGING
