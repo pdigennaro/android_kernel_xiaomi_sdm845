@@ -62,9 +62,12 @@ module_param(erandom_minor, int, 0);
 module_param(frandom_bufsize, int, 0);
 module_param(frandom_chunklimit, int, 0);
 
+<<<<<<< HEAD
 MODULE_PARM_DESC(frandom_major,"Major number of /dev/frandom and /dev/erandom");
 MODULE_PARM_DESC(frandom_minor,"Minor number of /dev/frandom");
 MODULE_PARM_DESC(erandom_minor,"Minor number of /dev/erandom");
+=======
+>>>>>>> parent of 4982e9668f713... staging: frandom: Clear up checkpatch conflicts
 MODULE_PARM_DESC(frandom_bufsize,"Internal buffer size in bytes. Default is 256. Must be >= 256");
 MODULE_PARM_DESC(frandom_chunklimit,"Limit for read() blocks size. 0 (default) is unlimited, otherwise must be >= 256");
 
@@ -182,7 +185,7 @@ static void init_rand_state(struct frandom_state *state, int seedflag)
 
 static int frandom_open(struct inode *inode, struct file *filp)
 {
-
+  
 	struct frandom_state *state;
 
 	int num = iminor(inode);
@@ -191,7 +194,11 @@ static int frandom_open(struct inode *inode, struct file *filp)
 	 * explicitly
 	 */
 	if ((num != frandom_minor) && (num != erandom_minor)) return -ENODEV;
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> parent of 4982e9668f713... staging: frandom: Clear up checkpatch conflicts
 	state = kmalloc(sizeof(struct frandom_state), GFP_KERNEL);
 	if (!state)
 		return -ENOMEM;
@@ -221,7 +228,7 @@ static int frandom_release(struct inode *inode, struct file *filp)
 
 	kfree(state->buf);
 	kfree(state);
-
+  
 	return 0;
 }
 
@@ -236,16 +243,16 @@ static ssize_t frandom_read(struct file *filp, char *buf, size_t count,
 	unsigned int i;
 	unsigned int j;
 	u8 *S;
-
+  
 	if (down_interruptible(&state->sem))
 		return -ERESTARTSYS;
-
+  
 	if ((frandom_chunklimit > 0) && (count > frandom_chunklimit))
 		count = frandom_chunklimit;
 
 	ret = count; /* It's either everything or an error... */
-
-	i = state->i;
+  
+	i = state->i;     
 	j = state->j;
 	S = state->S;  
 
@@ -263,7 +270,7 @@ static ssize_t frandom_read(struct file *filp, char *buf, size_t count,
 			swap_byte(&S[i], &S[j]);
 			*localbuf++ = S[(S[i] + S[j]) & 0xff];
 		}
-
+ 
 		if (copy_to_user(buf, state->buf, dobytes)) {
 			ret = -EFAULT;
 			goto out;
@@ -274,7 +281,7 @@ static ssize_t frandom_read(struct file *filp, char *buf, size_t count,
 	}
 
  out:
-	state->i = i;
+	state->i = i;     
 	state->j = j;
 
 	up(&state->sem);
@@ -288,7 +295,11 @@ static struct file_operations frandom_fops = {
 };
 
 static void frandom_cleanup_module(void) {
+<<<<<<< HEAD
 	unregister_chrdev_region(MKDEV(frandom_major, erandom_minor), 1);
+=======
+	device_destroy(frandom_class, erandom_devt);
+>>>>>>> parent of 4982e9668f713... staging: frandom: Clear up checkpatch conflicts
 	cdev_del(&erandom_cdev);
 	device_destroy(frandom_class, MKDEV(frandom_major, erandom_minor));
 
@@ -308,7 +319,7 @@ static int frandom_init_module(void)
 
 	/* The buffer size MUST be at least 256 bytes, because we assume that
 	   minimal length in init_rand_state().
-	*/
+	*/       
 	if (frandom_bufsize < 256) {
 		printk(KERN_ERR "frandom: Refused to load because frandom_bufsize=%d < 256\n",frandom_bufsize);
 		return -EINVAL;
@@ -340,18 +351,32 @@ static int frandom_init_module(void)
 		printk(KERN_WARNING "frandom: Failed to register class fastrng\n");
 		goto error0;
 	}
-
+	
 	/*
 	 * Register your major, and accept a dynamic number. This is the
 	 * first thing to do, in order to avoid releasing other module's
 	 * fops in frandom_cleanup_module()
 	 */
 
+<<<<<<< HEAD
+=======
+	result = alloc_chrdev_region(&frandom_devt, 0, NR_FRANDOM_DEVS, "frandom");
+	if (result < 0) {
+		printk(KERN_WARNING "frandom: failed to alloc frandom region\n");
+	  goto error1;
+	}
+
+	frandom_minor = MINOR(frandom_devt);
+	erandom_minor = frandom_minor + 1;
+	erandom_devt = MKDEV(MAJOR(frandom_devt), erandom_minor);
+
+>>>>>>> parent of 4982e9668f713... staging: frandom: Clear up checkpatch conflicts
 	cdev_init(&frandom_cdev, &frandom_fops);
 	frandom_cdev.owner = THIS_MODULE;
 	result = cdev_add(&frandom_cdev, MKDEV(frandom_major, frandom_minor), 1);
 	if (result) {
 	  printk(KERN_WARNING "frandom: Failed to add cdev for /dev/frandom\n");
+<<<<<<< HEAD
 	  goto error1;
 	}
 
@@ -362,6 +387,12 @@ static int frandom_init_module(void)
 	}
 
 	frandom_device = device_create(frandom_class, NULL, MKDEV(frandom_major, frandom_minor), NULL, "frandom");
+=======
+	  goto error2;
+	}
+
+	frandom_device = device_create(frandom_class, NULL, frandom_devt, NULL, "frandom");
+>>>>>>> parent of 4982e9668f713... staging: frandom: Clear up checkpatch conflicts
 
 	if (IS_ERR(frandom_device)) {
 		printk(KERN_WARNING "frandom: Failed to create frandom device\n");
@@ -374,6 +405,7 @@ static int frandom_init_module(void)
 	if (result) {
 	  printk(KERN_WARNING "frandom: Failed to add cdev for /dev/erandom\n");
 	  goto error4;
+<<<<<<< HEAD
 	}
 
 	result = register_chrdev_region(MKDEV(frandom_major, erandom_minor), 1, "/dev/erandom");
@@ -387,6 +419,15 @@ static int frandom_init_module(void)
 	if (IS_ERR(erandom_device)) {
 		printk(KERN_WARNING "frandom: Failed to create erandom device\n");
 		goto error6;
+=======
+	}
+
+	erandom_device = device_create(frandom_class, NULL, erandom_devt, NULL, "erandom");
+
+	if (IS_ERR(erandom_device)) {
+		printk(KERN_WARNING "frandom: Failed to create erandom device\n");
+		goto error5;
+>>>>>>> parent of 4982e9668f713... staging: frandom: Clear up checkpatch conflicts
 	}
 	return 0; /* succeed */
 
@@ -406,16 +447,23 @@ static int frandom_init_module(void)
 	kfree(erandom_state->buf);
 	kfree(erandom_state);
 
+<<<<<<< HEAD
 	return result;	
+=======
+    return result;
+>>>>>>> parent of 4982e9668f713... staging: frandom: Clear up checkpatch conflicts
 }
 
 module_init(frandom_init_module);
 module_exit(frandom_cleanup_module);
 
 EXPORT_SYMBOL(erandom_get_random_bytes);
+<<<<<<< HEAD
 
 MODULE_AUTHOR("Eli Billauer <eli@billauer.co.il>");
 MODULE_DESCRIPTION("'char_random_frandom' - A fast random generator for "
 "general usage");
 MODULE_LICENSE("GPL");
  
+=======
+>>>>>>> parent of 4982e9668f713... staging: frandom: Clear up checkpatch conflicts
