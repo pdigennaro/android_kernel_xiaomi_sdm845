@@ -2471,6 +2471,8 @@ CONFIG_QPNP_QNOVO=y
 # CONFIG_QPNP_TYPEC is not set
 # CONFIG_QPNP_QG is not set
 CONFIG_SMB1390_CHARGE_PUMP=y
+CONFIG_FORCE_FAST_CHARGE=y
+
 
 #
 # Miscellaneous Qualcomm Technologies, Inc. power support
