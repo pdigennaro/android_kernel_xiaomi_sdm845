@@ -255,7 +255,8 @@
 
 &devfreq_l3lat_0 {
 	qcom,core-dev-table =
-		<  300000  403200000 >,
+		<  300000  300000000 >,
+		<  480000  403200000 >,
 		<  652800  480000000 >,
 		<  748800  576000000 >,
 		<  902400  652800000 >,
@@ -429,7 +430,7 @@
 			1766400 160
 		>;
 		idle-cost-data = <
-			10 8 6 4
+			22 18 14 12
 		>;
 	};
 	CPU_COST_1: core-cost1 {
@@ -555,7 +556,7 @@
 &msm_gpu {
 	/* Updated chip ID */
 	qcom,chipid = <0x06030001>;
-	qcom,initial-pwrlevel = <6>;
+	qcom,initial-pwrlevel = <7>;
 
 	qcom,gpu-pwrlevels {
 		#address-cells = <1>;
@@ -565,7 +566,7 @@
 
 		qcom,gpu-pwrlevel@0 {
 			reg = <0>;
-			qcom,gpu-freq = <710000000>;
+			qcom,gpu-freq = <838000000>;
 			qcom,bus-freq = <12>;
 			qcom,bus-min = <12>;
 			qcom,bus-max = <12>;
@@ -573,17 +574,17 @@
 
 		qcom,gpu-pwrlevel@1 {
 			reg = <1>;
-			qcom,gpu-freq = <675000000>;
+			qcom,gpu-freq = <773000000>;
 			qcom,bus-freq = <12>;
-			qcom,bus-min = <10>;
+			qcom,bus-min = <11>;
 			qcom,bus-max = <12>;
 		};
 
 		qcom,gpu-pwrlevel@2 {
 			reg = <2>;
-			qcom,gpu-freq = <596000000>;
+			qcom,gpu-freq = <689000000>;
 			qcom,bus-freq = <10>;
-			qcom,bus-min = <9>;
+			qcom,bus-min = <10>;
 			qcom,bus-max = <12>;
 		};
 
@@ -621,6 +622,14 @@
 
 		qcom,gpu-pwrlevel@7 {
 			reg = <7>;
+			qcom,gpu-freq = <180000000>;
+			qcom,bus-freq = <3>;
+			qcom,bus-min = <2>;
+			qcom,bus-max = <4>;
+		};
+
+		qcom,gpu-pwrlevel@8 {
+			reg = <8>;
 			qcom,gpu-freq = <0>;
 			qcom,bus-freq = <0>;
 			qcom,bus-min = <0>;
@@ -628,6 +637,8 @@
 		};
 	};
 };
+
+
 
 &gmu {
 	qcom,gmu-pwrlevels {
