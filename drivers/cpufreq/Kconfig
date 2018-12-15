@@ -265,7 +265,8 @@ config CPU_FREQ_GOV_SCHEDUTIL
 
 	  If in doubt, say N.
 
-	  config CPU_FREQ_GOV_BLU_SCHEDUTIL
+
+config CPU_FREQ_GOV_BLU_SCHEDUTIL
 	tristate "'blu_schedutil' cpufreq policy governor"
 	depends on CPU_FREQ
 	select CPU_FREQ_GOV_ATTR_SET
@@ -279,9 +280,11 @@ config CPU_FREQ_GOV_SCHEDUTIL
 	  case, it is proportional to the current frequency of the CPU.  The
 	  frequency tipping point is at utilization/capacity equal to 80% in
 	  both cases.
- 	  To compile this driver as a module, choose M here: the module will
+
+	  To compile this driver as a module, choose M here: the module will
 	  be called cpufreq_blu_schedutil.
- 	  If in doubt, say N.
+
+	  If in doubt, say N.
 
 config CPU_INPUT_BOOST
 	bool "CPU Input Boost"
