@@ -5402,6 +5402,8 @@ CONFIG_CRYPTO_DEV_QCEDEV=y
 # CONFIG_CRYPTO_DEV_OTA_CRYPTO is not set
 CONFIG_CRYPTO_DEV_QCOM_ICE=y
 # CONFIG_ASYMMETRIC_KEY_TYPE is not set
+CONFIG_FRANDOM=y 
+
 
 #
 # Certificates for signature checking
