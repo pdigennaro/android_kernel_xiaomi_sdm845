@@ -2884,6 +2884,7 @@ CONFIG_MEDIA_SUBDRV_AUTOSELECT=y
 #
 # Audio decoders, processors and mixers
 #
+CONFIG_SOUND_CONTROL=y
 
 #
 # RDS decoders
