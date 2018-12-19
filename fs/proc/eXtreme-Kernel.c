@@ -6,7 +6,7 @@
 
 static int eXtreme_kernel_proc_show(struct seq_file *m, void *v)
 {
-	seq_printf(m, "{\"kernel-name\": \"eXtremeKernel\","
+	seq_printf(m, "{\"kernel-name\": \"eXtreme-Kernel\","
 			"\"version\": \"7.0\","
 			"\"buildtime\": \"%s\"}\n", eXtreme_KERNEL_TIMESTAMP);
 	return 0;
