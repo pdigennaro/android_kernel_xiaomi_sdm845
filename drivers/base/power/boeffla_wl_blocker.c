@@ -234,3 +234,4 @@ static void boeffla_wl_blocker_exit(void)
 /* define driver entry points */
 module_init(boeffla_wl_blocker_init);
 module_exit(boeffla_wl_blocker_exit);
+
